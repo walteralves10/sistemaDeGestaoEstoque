@@ -2,6 +2,7 @@ package aplicacaosalvaclass;
 
 import OpIO.IO;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 public class Produto extends AplicacaoSalvaClass{
     
@@ -64,8 +65,15 @@ public class Produto extends AplicacaoSalvaClass{
     }
     
     public void exibeProduto(){
-        for(Produto umProduto : produtoList){
-            System.out.println(umProduto.toString());
+        String exibeProduto = "";
+
+        if (produtoList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vazio!");
+        } else {
+            for (Produto umProduto : produtoList) {
+                exibeProduto += umProduto.toString() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, exibeProduto);
         }
     }
     
@@ -92,27 +100,27 @@ public class Produto extends AplicacaoSalvaClass{
         }
     }
     
-    public static void main(String[] args) throws IOException {
-        
-        Produto umProduto = new Produto();
-        
-        umProduto.adicionaProduto("mause",50.0,12);
-        IO.inserir("produtos.txt", umProduto);
-        umProduto.exibeProduto();
-        
-        umProduto.ControleQuantidadeEstoque("mause", 2, ENTRADA);
-        IO.inserir("produtos.txt", umProduto);
-        umProduto.exibeProduto();
-        
-        umProduto.ControleQuantidadeEstoque("mause", 2, ENTRADA);
-        IO.inserir("produtos.txt", umProduto);
-        umProduto.exibeProduto();
-        
-        umProduto.ControleQuantidadeEstoque("mause", 8, SAIDA);
-        IO.inserir("produtos.txt", umProduto);
-        umProduto.exibeProduto();
-      /*umProduto.removeProduto("mause");
-        IO.inserir("produtos", umProduto);
-        umProduto.exibeProduto();*/
-    }
+//    public static void main(String[] args) throws IOException {
+//        
+//        Produto umProduto = new Produto();
+//        
+//        umProduto.adicionaProduto("mause",50.0,12);
+//        IO.inserir("produtos.txt", umProduto);
+//        umProduto.exibeProduto();
+//        
+//        umProduto.ControleQuantidadeEstoque("mause", 2, ENTRADA);
+//        IO.inserir("produtos.txt", umProduto);
+//        umProduto.exibeProduto();
+//        
+//        umProduto.ControleQuantidadeEstoque("mause", 2, ENTRADA);
+//        IO.inserir("produtos.txt", umProduto);
+//        umProduto.exibeProduto();
+//        
+//        umProduto.ControleQuantidadeEstoque("mause", 8, SAIDA);
+//        IO.inserir("produtos.txt", umProduto);
+//        umProduto.exibeProduto();
+//      /*umProduto.removeProduto("mause");
+//        IO.inserir("produtos", umProduto);
+//        umProduto.exibeProduto();*/
+//    }
 }
