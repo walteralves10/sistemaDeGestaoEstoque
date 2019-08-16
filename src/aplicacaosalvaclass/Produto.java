@@ -10,7 +10,7 @@ public class Produto extends AplicacaoSalvaClass{
     private static final int SAIDA = 2;
     private String descricao ;
     private double valor ;
-    private double quantidade ;
+    private int quantidade ;
     
     public Produto(){
         setDescricao("");
@@ -18,7 +18,7 @@ public class Produto extends AplicacaoSalvaClass{
         setQuantidade(0);
     }
 
-    public Produto(String descricao, double valor, double quantidade) {
+    public Produto(String descricao, double valor, int quantidade) {
         setDescricao(descricao);
         setValor(valor);
         setQuantidade(quantidade);
@@ -44,7 +44,7 @@ public class Produto extends AplicacaoSalvaClass{
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
     
@@ -92,13 +92,13 @@ public class Produto extends AplicacaoSalvaClass{
         }
     }
 
-    public void EntradaEstoque(String descricao, int quantidade, int tipo){
-        for(int i=0; i < produtoList.size(); i++){
-            if(produtoList.get(i).getDescricao().contentEquals(descricao)){
-                EntradaSaidaEstoque(quantidade, i, tipo);
-            }
-        }
-    }
+//    public void EntradaEstoque(String descricao, int quantidade, int tipo){
+//        for(int i=0; i < produtoList.size(); i++){
+//            if(produtoList.get(i).getDescricao().contentEquals(descricao)){
+//                EntradaSaidaEstoque(quantidade, i, tipo);
+//            }
+//        }
+//    }
     
 //    public static void main(String[] args) throws IOException {
 //        

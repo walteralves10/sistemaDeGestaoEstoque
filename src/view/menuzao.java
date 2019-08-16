@@ -4,6 +4,7 @@ import OpIO.IO;
 import aplicacaosalvaclass.AplicacaoSalvaClass;
 import aplicacaosalvaclass.Produto;
 import aplicacaosalvaclass.Usuario;
+import aplicacaosalvaclass.Venda;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,10 +12,14 @@ import javax.swing.JOptionPane;
 
 public class menuzao extends javax.swing.JFrame {
 
-    private static final String PRODUTO = "usuarios.txt";
+    private static final int ENTRADA = 1;
+    private static final int SAIDA = 2;
+    private static final String VENDA = "vendas.txt";
+    private static final String PRODUTO = "produtos.txt";
     private static final String USUARIO = "usuarios.txt";
     Usuario user = new Usuario();
     Produto umProduto = new Produto();
+    Venda umaVenda = new Venda();
 
     public menuzao() {
         initComponents();
@@ -111,7 +116,7 @@ public class menuzao extends javax.swing.JFrame {
                             .addComponent(botaoListarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoExcluirClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoAdicionarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +200,7 @@ public class menuzao extends javax.swing.JFrame {
                             .addComponent(botaoExcluirProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoAdicionarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoListarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,8 +248,18 @@ public class menuzao extends javax.swing.JFrame {
         });
 
         botaoExcluiVenda.setText("Excluir");
+        botaoExcluiVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExcluiVendaActionPerformed(evt);
+            }
+        });
 
         botaoListaVenda.setText("Listar");
+        botaoListaVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoListaVendaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -274,7 +289,7 @@ public class menuzao extends javax.swing.JFrame {
                             .addComponent(botaoExcluiVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoAdicionaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoListaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +321,9 @@ public class menuzao extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,7 +363,7 @@ public class menuzao extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoExcluirClientesActionPerformed
 
     private void botaoListarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarClientesActionPerformed
-
+        user = (Usuario) IO.ler(USUARIO);
         user.exibeUsuario();
 
     }//GEN-LAST:event_botaoListarClientesActionPerformed
@@ -377,14 +394,15 @@ public class menuzao extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, "Excluido!");
             limparCampo();
-            
-        }catch (IOException ex) {
+
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_botaoExcluirProdutosActionPerformed
 
     private void botaoListarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarProdutosActionPerformed
         // TODO add your handling code here:
+        umProduto = (Produto) IO.ler(PRODUTO);
         umProduto.exibeProduto();
     }//GEN-LAST:event_botaoListarProdutosActionPerformed
 
@@ -394,8 +412,39 @@ public class menuzao extends javax.swing.JFrame {
 
     private void botaoAdicionaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionaVendaActionPerformed
         // TODO add your handling code here:
-        
+        try {
+            umaVenda.adicionaVenda(textoNomeVenda.getText(), textoDescricaoVenda.getText(), Integer.parseInt(textoQuantidadeVenda.getText()));
+            IO.inserir(VENDA, umaVenda);
+            
+            umProduto.ControleQuantidadeEstoque(textoDescricaoVenda.getText(), Integer.parseInt(textoQuantidadeVenda.getText()), ENTRADA);
+            IO.inserir(PRODUTO, umProduto);
+
+            JOptionPane.showMessageDialog(null, "Adicionado!");
+            limparCampo();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_botaoAdicionaVendaActionPerformed
+
+    private void botaoExcluiVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluiVendaActionPerformed
+        // TODO add your handling code here:
+        try {
+            umaVenda = (Venda) IO.ler(VENDA);
+            umaVenda.removeVenda(textoNomeVenda.getText(), textoDescricaoVenda.getText());
+            IO.inserir(VENDA, umaVenda);
+
+            JOptionPane.showMessageDialog(null, "Excluido!");
+            limparCampo();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_botaoExcluiVendaActionPerformed
+
+    private void botaoListaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListaVendaActionPerformed
+        // TODO add your handling code here:
+        umaVenda = (Venda) IO.ler(VENDA);
+        umaVenda.exibeVenda();
+    }//GEN-LAST:event_botaoListaVendaActionPerformed
 
     private void limparCampo() {
         textNome.setText("");
