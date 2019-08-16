@@ -79,9 +79,10 @@ public class Produto extends AplicacaoSalvaClass{
     
     private void EntradaSaidaEstoque(int quantidade, int index, int tipo){
         if(tipo == SAIDA)
-            produtoList.get(index).quantidade-=quantidade;
-        if(tipo == ENTRADA)
             produtoList.get(index).quantidade+= quantidade;
+            
+        if(tipo == ENTRADA)
+            produtoList.get(index).quantidade-=quantidade;
     }
     
     public void ControleQuantidadeEstoque(String descricao, int quantidade, int tipo){
